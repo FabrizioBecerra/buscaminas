@@ -1,7 +1,7 @@
 //Constantes del juego
-const COLUMNAS = 5;
-const FILAS = 5;
-const CANTIDAD_MINAS = 3;
+const COLUMNAS = 3;
+const FILAS = 3;
+const CANTIDAD_MINAS = 2;
 
 //Variables con colores para los casilleros (NO se pudieron declarar como constantes ya que  la fn color sólo está definida para el setup y el draw)
 var COLOR_CASILLERO_CON_MINA;
@@ -15,7 +15,6 @@ var hizoClick = false;
 
 //Otras variables
 var casillerosSinDescubrir;
-casillerosSinDescubrir = COLUMNAS * FILAS;
 
 function setup()
 {
@@ -29,7 +28,7 @@ function setup()
 
   // Modificar/completar
  ponerMinasTablero();
- 
+ casillerosSinDescubrir = COLUMNAS * FILAS;
 }
 
 
@@ -48,9 +47,8 @@ function draw() {
       {
         pintarCasillero(columnaPresionada, filaPresionada, COLOR_CASILLERO_SIN_MINA);
         descubrirCasillero(columnaPresionada, filaPresionada);
-        casillerosSinDescubrir = casillerosSinDescubrir - 1;
       }
-      if(casillerosSinDescubrir == 1)
+      if(casillerosSinDescubrir == CANTIDAD_MINAS)
       {
         ganoElJuego();
       }
@@ -69,20 +67,32 @@ function draw() {
 
 function ganoElJuego()
 {
-  return false;   //Esto hace que NUNCA gane el juego. Modificar/completar
+  ganar();
+  return true;   
 }
 
 function ponerMinasTablero()
 {
-  ponerMinaCasillero(2, 2); 
+  for (let contador = 0; contador < CANTIDAD_MINAS; contador++)
+{
+  numeroAleatorioFila = floor(random(0, 3));
+  numeroAleatorioColumna = floor(random(0, 3));
+
+  ponerMinaCasillero(numeroAleatorioColumna, numeroAleatorioFila); 
+}
+  
 }
 
 function mostrarMinas()
 {
-  // Modificar/completar
+  for (let columna = 0; columna < COLUMNAS; columna++) //recorro columnas
+    for(let fila = 0; fila < FILAS; fila++) //recorro filas
+      if (tieneMinaCasillero(columna, fila) == true) // veo si hay una mina en esa columna y fila
+          pintarCasillero(columna, fila, COLOR_CASILLERO_CON_MINA); // pinto el casillero
 }
 
 function contarMinasAlrededor(columna, fila)
 {
   return 9;   //Esto hace que SIEMPRE cuente 9 minas alrededor. Modificar/completar
+
 }
