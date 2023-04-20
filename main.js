@@ -77,8 +77,11 @@ function ponerMinasTablero()
 {
   numeroAleatorioFila = floor(random(0, 3));
   numeroAleatorioColumna = floor(random(0, 3));
-
-  ponerMinaCasillero(numeroAleatorioColumna, numeroAleatorioFila); 
+  if(!tieneMinaCasillero(numeroAleatorioColumna, numeroAleatorioFila))
+    ponerMinaCasillero(numeroAleatorioColumna, numeroAleatorioFila); 
+  else
+    contador--;
+    console.log(numeroAleatorioColumna, numeroAleatorioFila);
 }
   
 }
